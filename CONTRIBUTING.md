@@ -146,7 +146,7 @@ and run these plugins with the existing che-theia app:
 
 ## Che-Theia development on che.openshift.io
 
-[![Build Status](https://img.shields.io/static/v1?label=che&message=openshift.io&color=orange)](https://che.openshift.io/f?url=https://che.openshift.io/f?url=https://raw.githubusercontent.com/eclipse/che-theia/osio-devfile/devfiles/osio-dogfooding.devfile.yaml)
+[![Build Status](https://img.shields.io/static/v1?label=che&message=openshift.io&color=orange)](https://che.openshift.io/f?url=https://raw.githubusercontent.com/eclipse/che-theia/osio-devfile/devfiles/osio-dogfooding.devfile.yaml)
 
 ## How to develop Che Theia remote plugin mechanism
 
