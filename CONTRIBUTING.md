@@ -43,7 +43,6 @@ For the whole workflows, we will need a workspace with such containers:
 
 All containers have `/projects` folder mounted, which is shared among them.
 
-
 Developer workflow:
 
 1. Start the workspace with the devfile, it is cloning Theia and the che-theia plugins.
@@ -56,7 +55,6 @@ Developer workflow:
 
 The following devfile provides examples of commands to build and run che-theia with factory and containers plugins.
 
-
 ### Step 1: Start the workspace
 In this section we are going to start a new workspace to work on che-theia. The new workspace will have few projects cloned: `theia` and `che-theia`. It will also setup the containers and commands in the `My workspace` view. We will use these commands in the next steps.
 
@@ -66,8 +64,6 @@ The devfile could be started using `chectl`:
 chectl workspace:start -f https://raw.githubusercontent.com/eclipse/che-theia/master/devfiles/che-theia-all.devfile.yaml
 ```
 At workspace start, Che will clone Theia and Che-theia.
-
-
 
 ### Step 2: Decorate Theia with Che-theia extensions: che-theia init
 
