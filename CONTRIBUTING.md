@@ -145,7 +145,7 @@ and run these plugins with the existing che-theia app:
 
 There is a [devfile](https://github.com/eclipse/che-theia/blob/osio-devfile/devfiles/osio-dogfooding.devfile.yaml) to develop Che-Theia on [che.openshift.io](https://che.openshift.io)
 
-Projects directory on [che.openshift.io](https://che.openshift.io) is limited to 1 gigabyte. It's not enough to build Che-Theia.
+Projects directory which is a Persistent Volume on [che.openshift.io](https://che.openshift.io) is limited to 1 gigabyte. It's not enough to build Che-Theia.
 The main idea is to use `/tmp/theia` directotry. Amount for this directory is limited to 3 gigabytes, which is enough to build Che-Theia and run.
 In comparing with `/projects`, temporary directiry is not persisted and is cleared on workspace stop.
 
