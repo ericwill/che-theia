@@ -146,7 +146,50 @@ and run these plugins with the existing che-theia app:
 
 ## Che-Theia development on che.openshift.io
 
-[![Build Status](https://img.shields.io/static/v1?label=che&message=openshift.io&color=orange)](https://che.openshift.io/f?url=https://raw.githubusercontent.com/eclipse/che-theia/osio-devfile/devfiles/osio-dogfooding.devfile.yaml)
+There is a [devfile](https://github.com/eclipse/che-theia/blob/osio-devfile/devfiles/osio-dogfooding.devfile.yaml) to develop Che-Theia on che.openshift.io
+
+Projects directory on che.openshift.io is limited to 1 gigabyte. It's not enough to build Che-Theia.
+The main idea is to use `/tmp/theia` directotry. Amount for this directory is limited to 3 gigabytes, which is enough to build Che-Theia and run.
+In comparing with `/projects`, temporary directiry is not persisted and is cleared on workspace stop.
+
+### Create workspace
+
+Use the badge to creatye a workspace using factory
+[![Try id on che.openshift.io](https://img.shields.io/static/v1?label=che&message=openshift.io&color=orange)](https://che.openshift.io/f?url=https://raw.githubusercontent.com/eclipse/che-theia/osio-devfile/devfiles/osio-dogfooding.devfile.yaml)
+
+### Copy sources to `/tmp/theia` directory
+
+To copy sources to `/tmp/theia` directory use `1. Rsync Theia` command. With rsync it's become possible to edit sources in `/projects` with the following synchronizing with `/tmp/theia`.
+
+  $ rsync -rtv --exclude='node_mobules' /projects/theia/ /tmp/theia/;
+
+### Initlalize Che-Theia
+
+To initialize Che-Theia run `che:theia init` in `/tmp/theia` directory or use `2. Init che:theia` command.
+
+### Build
+
+The `3. Build che:theia` command builds Che-Theia. It runs `yarn` in `/tmp/theia` directory.
+
+### Launch
+
+Before launching Che-Theia we have to prepare dedicated directories for plugins, default plugins and for projects, which is used as workspace directory.
+
+Use `4.1. Prepare theia-* dirs` command to prepare all the directories in one click. The command will run the following in theia-editor container.
+
+$ mkdir /projects/theia-default-plugins
+$ mkdir /projects/theia-plugins
+$ mkdir /projects/theia-projects-dir
+$ cd /default-theia-plugins
+$ cp * /projects/theia-default-plugins/
+
+To launch Che-Theia run `4.2. Launch` command. It will set necessary variables and start Che-Theia in `che-dev` container.
+
+$ export CHE_PROJECTS_ROOT="/projects/theia-projects-dir"
+$ export THEIA_DEFAULT_PLUGINS="local-dir:///projects/theia-default-plugins"
+$ export THEIA_PLUGINS="local-dir:///projects/theia-plugins"
+$ export THEIA_PLUGIN_ENDPOINT_DISCOVERY_PORT="2506"
+$ yarn theia start /projects/theia-projects-dir --hostname=0.0.0.0 --port=3010
 
 ## How to develop Che Theia remote plugin mechanism
 

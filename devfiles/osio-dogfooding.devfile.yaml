@@ -12,8 +12,10 @@
 # For developers who work on Theia core or che-theia core extensions and plugins.
 
 apiVersion: 1.0.0
+
 metadata:
   name: theia-dogfooding
+  
 projects:
   - name: theia
     source:
@@ -56,7 +58,37 @@ components:
     image: 'quay.io/eclipse/che-theia-dev:next'
 
 commands:
-  - name: '1. Prepare theia-* dirs'
+  - name: '1. Rsync theia'
+    actions:
+      - workdir: /projects
+        type: exec
+        command: |
+          echo -e '\e[32mRsyncing theia sources to /tmp/theia...\e[0m'; \
+          rsync -rtv --exclude='node_mobules' /projects/theia/ /tmp/theia/; \
+          echo -e '\e[32mDone\e[0m'
+        component: che-dev
+
+  - name: '2. Init che:theia'
+    actions:
+      - workdir: /tmp/theia
+        type: exec
+        command: |
+          echo -e '\e[32mInitializing che-theia...\e[0m'; \
+          che:theia init; \
+          echo -e '\e[32mDone\e[0m'
+        component: che-dev
+
+  - name: '3. Build che:theia'
+    actions:
+      - workdir: /tmp/theia
+        type: exec
+        command: |
+          echo -e '\e[32mBuilding che-theia...\e[0m'; \
+          yarn; \
+          echo -e '\e[32mDone\e[0m'
+        component: che-dev
+
+  - name: '4.1. Prepare theia-* dirs'
     actions:
       - workdir: /projects
         type: exec
@@ -69,34 +101,8 @@ commands:
           cp * /projects/theia-default-plugins/; \
           echo -e '\e[32mDone\e[0m'
         component: theia-editor
-  - name: '2. Rsync theia'
-    actions:
-      - workdir: /projects
-        type: exec
-        command: |
-          echo -e '\e[32mRsyncing theia sources to /tmp/theia...\e[0m'; \
-          rsync -rtv --exclude='node_mobules' /projects/theia/ /tmp/theia/; \
-          echo -e '\e[32mDone\e[0m'
-        component: che-dev
-  - name: '3. Init che:theia'
-    actions:
-      - workdir: /tmp/theia
-        type: exec
-        command: |
-          echo -e '\e[32mInitializing che-theia...\e[0m'; \
-          che:theia init; \
-          echo -e '\e[32mDone\e[0m'
-        component: che-dev
-  - name: '4. Build che:theia'
-    actions:
-      - workdir: /tmp/theia
-        type: exec
-        command: |
-          echo -e '\e[32mBuilding che-theia...\e[0m'; \
-          yarn; \
-          echo -e '\e[32mDone\e[0m'
-        component: che-dev
-  - name: '5. Launch'
+
+  - name: '4.2. Launch'
     actions:
       - workdir: /tmp/theia/examples/assembly
         type: exec
