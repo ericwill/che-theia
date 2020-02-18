@@ -151,7 +151,7 @@ In comparing with `/projects`, temporary directiry is not persisted and is clear
 
 ### Create workspace
 
-Use the badge to creatye a workspace using factory
+Use the badge to create a workspace using factory
 
 [![Try it on che.openshift.io](https://img.shields.io/static/v1?label=che&message=openshift.io&color=orange)](https://che.openshift.io/f?url=https://raw.githubusercontent.com/eclipse/che-theia/osio-devfile/devfiles/osio-dogfooding.devfile.yaml)
 
